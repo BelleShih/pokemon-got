@@ -34,7 +34,7 @@
 </head>
 <body>
     <img src="./images/map.jpg" id="map">
-    <img src="./images/pokemon0.png">
+    
     <div id="game">
         <!-- <img src="./images/pokemon1.png" id="pokemon1"> -->
         
@@ -73,8 +73,8 @@
                         return Math.floor( Math.random() * num )
                     }
                     // console.log(rand(10))
-                    if( rand(10) >= 0 ) {
-                        $('#game').prepend(`<img src="./images/pokemon${rand(10)}.png" id="pokemon${id}">`)
+                    if( rand(15) < 10 ) {
+                        $('#game').prepend(`<img src="./images/pokemon0.gif" id="pokemon${id}">`)
                         console.log(rand(10))
                         id++
                     }
