@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <title>Document</title>
     <style>
         html,
@@ -13,6 +14,7 @@
             position: relative;
             background: black;
             color: white;
+            font-family: 'Press Start 2P', cursive;
         }
         #map{
             height: 100vh;
@@ -28,7 +30,74 @@
             left: 50%;
             /* top: 50%; */
             transform: translate(-50%);
-
+            cursor: url(./images/pokemonball.png) 15 15, auto;
+        }
+        #btn-start{
+            /* width: 200px;
+            height: 30px;
+            background: rgb(135, 161, 104);
+            color: white; */
+            background: #81ac46;
+            display: inline-block;
+            position: relative;
+            top: 100px;
+            left: 70px;
+            text-align: center;
+            font-size: 25px;
+            padding: 20px;
+            font-family: 'Press Start 2P', cursive;            
+            color: white; 
+            cursor: pointer;        
+        }
+        #btn-start:hover{
+            background: #426d1e;
+        }
+        #info{
+            position: absolute;
+            top: 550px;
+            left: 1180px;
+            width: 180px;
+            height: 90px;
+            background: white;
+            color: black;
+            padding: 20px;
+        }
+        #logo{
+            position: absolute;
+            top: 15px;
+            left: 270px;
+            width: 200px;
+        }
+        #rule{
+            color: white;
+            position: relative;
+            top: 70px;
+            left: 50px;
+            border: 5px solid white;
+            width: 200px;
+            height: 400px;
+        }
+        #text{
+            font-size: 30px;
+            position: relative;
+            top: 50px;
+            left: 50px;
+            line-height: 40px;
+        }
+        table{
+            padding: 10px;
+        }
+        /* td{
+            text-align: center;
+        } */
+        
+        td img {
+            width: 30px;
+        }
+        #line{
+            width: 150px;
+            height: 2px;
+            background: black;
         }
     </style>
 </head>
@@ -39,15 +108,98 @@
         <!-- <img src="./images/pokemon1.png" id="pokemon1"> -->
         
     </div>
-    <input type="button" value="START" id="btn-start">
-    <p>score: <span id="text-score">0</span></p>
-    <p>time: <span id="text-time">20</span></p>
+    <img src="./images/logo.png" id="logo">
+    <div>
+    <div id="text">
+        SPEEDY 
+        <br />
+        POKEMON
+    </div>   
+        <div id="rule">
+        <table>
+            <tr>
+                <td style="height:55px; border-bottom: 2px solid white;">
+                    <img src="./images/pokemon19.png">
+                </td>
+                <td style="border-bottom: 2px solid white; text-align: center">+20</td>
+            </tr>
+            <tr>
+                <td style="height:55px; border-bottom: 2px solid white;">
+                    <img src="./images/pokemon18.png">
+                </td>
+                <td style="border-bottom: 2px solid white; text-align: center">+10</td>
+            </tr>
+            
+            <tr>
+                <td style="height:200px; border-bottom: 2px solid white;"> 
+                    <img src="./images/pokemon0.png">
+                    <img src="./images/pokemon1.png">
+                    <img src="./images/pokemon2.png">
+                    <img src="./images/pokemon3.png">
+                    <img src="./images/pokemon4.png">
+                    <img src="./images/pokemon5.png">
+                    <img src="./images/pokemon6.png">
+                    <img src="./images/pokemon7.png">
+                    <img src="./images/pokemon8.png">
+                    <img src="./images/pokemon9.png">
+                    <img src="./images/pokemon10.png">
+                    <img src="./images/pokemon11.png">
+                    <img src="./images/pokemon12.png">
+                    <img src="./images/pokemon13.png">
+                    <img src="./images/pokemon14.png">
+                    <img src="./images/pokemon15.png">
+                    <img src="./images/pokemon16.png">                    
+                    
+                </td>
+                <td style="border-bottom: 2px solid white; text-align: center">+1</td>
+            </tr>
+            <tr>
+                <td style="height:55px">
+                    <img src="./images/pokemon17.png">
+                </td>
+                <td style="text-align: center">-1</td>
+            </tr>
+        </table>
+     </div> 
+        <input type="button" value="START" id="btn-start">
+    </div>
+    
+    <div id="info">
+    <p>SCORE: <span id="text-score">0</span></p>
+    <p>TIME: <span id="text-time">20</span>s</p>
+    <!-- <div id="line"></div>
+    <br>
+    <p>PLAYER: <span id="text-highplayer"></span></p>    
+    <p>SCORE: <span id="text-highscore"></span></p> -->
+    </div>
     <script src="jquery-3.5.1.min.js"></script>
     <script>
         let score = 0
         let time = 20
 
         let id = 0
+
+        const rand = (num) => {
+            return Math.floor( Math.random() * num )
+        }
+
+        const movepokemon = (id) => {
+            $(`#pokemon${id}`).animate({
+                "left": rand(90) + "%"
+            }, 1000)
+            .animate({
+                "top": rand(90) + "%"
+            }, 1000)
+            .animate({
+                "right": rand(90) + "%"
+            }, 1000)
+            .animate({
+                "bottom": rand(90) + "%"
+            }, 1000, function(){
+                movepokemon(id)
+            })
+            
+        }
             
 
         $('#btn-start').click(function(){
@@ -64,23 +216,59 @@
                 if( time === 0 ) {
                     clearInterval(timer)
                     $('#btn-start').attr( 'disabled', false )
+                    $('#game img').remove()
 
                     setTimeout(() => {
-                        alert('TIME OUT!')
+                        alert(`TIME OUT! 你得了 ${score} 分！`)
                     }, 100)
-                } else {
-                    const rand = (num) => {
-                        return Math.floor( Math.random() * num )
-                    }
-                    // console.log(rand(10))
-                    if( rand(15) < 10 ) {
-                        $('#game').prepend(`<img src="./images/pokemon0.gif" id="pokemon${id}">`)
-                        console.log(rand(10))
+                } else {                
+                    if( rand(19) < 17 ) {
+                        $('#game').prepend(`<img src="./images/pokemon${rand(20)}.gif" id="pokemon${id}">`)
+                        // $(`#pokemon${id}`).parent().css({position: 'relative'});
+                        $(`#pokemon${id}`).css({
+                            left: rand(100) + "%",
+                            top: rand(100) + "%",
+                            position:'absolute'
+                        })
+                        movepokemon(id)
                         id++
                     }
                 }
             }, 1000)
         })
+        
+        // 點到小智扣一分
+        $('#game').on('click', 'img', function(){  
+            if ($(this).attr('src') === './images/pokemon17.gif') {
+                score -= 2   
+                $('#text-score').text(score)                                
+            }
+            if ($(this).attr('src') === './images/pokemon18.gif') {
+                score += 9   
+                $('#text-score').text(score)                                
+            }
+            if ($(this).attr('src') === './images/pokemon19.gif') {
+                score += 19  
+                $('#text-score').text(score)                                
+            }
+        })
+
+        // 一般加一分
+        $('#game').on('click', 'img', function(){             
+          if ($(this).attr('src') != './images/pokemon17.gif') {
+            $(this).attr('src', './images/pokemonget.png')
+          } else {
+            $(this).attr('src', './images/pokemonget-no.png')  
+          }
+            $(this).stop(true, false)
+            $(this).css('pointer-events', 'none')
+            score++
+            $('#text-score').text(score)
+
+        })
+
+
+
     </script>
 </body>
 </html>
