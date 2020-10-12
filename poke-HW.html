@@ -11,6 +11,7 @@
             margin: auto;
         }
         body{
+            width: 1280px;
             position: relative;
             background: black;
             color: white;
@@ -22,25 +23,24 @@
             left: 50%;            
             transform: translate(-50%);
             z-index: -100;
+            /* cursor: url(./images/pokemonball.png) 15 15, auto; */
         }
         #game{
-            width: 800px;
-            height: 700px;
+            width: 1100px;
+            height: 930px;
             position: absolute;
             left: 50%;
             /* top: 50%; */
             transform: translate(-50%);
-            cursor: url(./images/pokemonball.png) 15 15, auto;
+            cursor: url(./images/pokemonball.png) 15 15, auto;            
+            z-index: 1;
+            
         }
-        #btn-start{
-            /* width: 200px;
-            height: 30px;
-            background: rgb(135, 161, 104);
-            color: white; */
+        #btn-start{            
             background: #81ac46;
             display: inline-block;
             position: relative;
-            top: 100px;
+            top: 300px;
             left: 70px;
             text-align: center;
             font-size: 25px;
@@ -52,26 +52,32 @@
         #btn-start:hover{
             background: #426d1e;
         }
+        
+        #logo{
+            position: absolute;
+            top: 15px;
+            left: 30px;
+            width: 200px;
+        }
         #info{
             position: absolute;
-            top: 550px;
-            left: 1180px;
+            top: 800px;
+            left: 100%;
             width: 180px;
             height: 90px;
             background: white;
             color: black;
             padding: 20px;
         }
-        #logo{
-            position: absolute;
-            top: 15px;
-            left: 270px;
-            width: 200px;
+        #left{
+            position: relative;
+            left: -250px;
         }
+       
         #rule{
             color: white;
             position: relative;
-            top: 70px;
+            top: 220px;
             left: 50px;
             border: 5px solid white;
             width: 200px;
@@ -80,7 +86,7 @@
         #text{
             font-size: 30px;
             position: relative;
-            top: 50px;
+            top: 150px;
             left: 50px;
             line-height: 40px;
         }
@@ -94,22 +100,22 @@
         td img {
             width: 30px;
         }
-        #line{
+        /* #line{
             width: 150px;
             height: 2px;
             background: black;
-        }
+        } */
     </style>
 </head>
 <body>
-    <img src="./images/map.jpg" id="map">
     
+    <img src="./images/map.jpg" id="map">
     <div id="game">
         <!-- <img src="./images/pokemon1.png" id="pokemon1"> -->
         
     </div>
     <img src="./images/logo.png" id="logo">
-    <div>
+    <div id="left">
     <div id="text">
         SPEEDY 
         <br />
@@ -221,6 +227,7 @@
                     setTimeout(() => {
                         alert(`TIME OUT! 你得了 ${score} 分！`)
                     }, 100)
+
                 } else {                
                     if( rand(19) < 17 ) {
                         $('#game').prepend(`<img src="./images/pokemon${rand(20)}.gif" id="pokemon${id}">`)
@@ -231,6 +238,7 @@
                             position:'absolute'
                         })
                         movepokemon(id)
+
                         id++
                     }
                 }
@@ -243,10 +251,12 @@
                 score -= 2   
                 $('#text-score').text(score)                                
             }
+            // 點到噴火龍加十分
             if ($(this).attr('src') === './images/pokemon18.gif') {
                 score += 9   
                 $('#text-score').text(score)                                
             }
+            // 點到金鯉魚王加二十分
             if ($(this).attr('src') === './images/pokemon19.gif') {
                 score += 19  
                 $('#text-score').text(score)                                
