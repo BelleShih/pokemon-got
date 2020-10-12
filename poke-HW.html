@@ -33,15 +33,14 @@
             /* top: 50%; */
             transform: translate(-50%);
             cursor: url(./images/pokemonball.png) 15 15, auto;            
-            z-index: 1;
-            
+            z-index: 1;            
         }
         #btn-start{            
             background: #81ac46;
             display: inline-block;
             position: relative;
             top: 300px;
-            left: 70px;
+            left: 60px;
             text-align: center;
             font-size: 25px;
             padding: 20px;
@@ -61,33 +60,34 @@
         }
         #info{
             position: absolute;
-            top: 800px;
+            top: 700px;
             left: 100%;
             width: 180px;
-            height: 90px;
+            height: 190px;
             background: white;
             color: black;
             padding: 20px;
         }
         #left{
             position: relative;
-            left: -250px;
+            left: -270px;
+
         }
        
         #rule{
             color: white;
             position: relative;
             top: 220px;
-            left: 50px;
+            left: 40px;
             border: 5px solid white;
             width: 200px;
             height: 400px;
         }
         #text{
-            font-size: 30px;
+            font-size: 40px;
             position: relative;
             top: 150px;
-            left: 50px;
+            left: 10px;
             line-height: 40px;
         }
         table{
@@ -100,11 +100,11 @@
         td img {
             width: 30px;
         }
-        /* #line{
+        #line{
             width: 150px;
             height: 2px;
             background: black;
-        } */
+        }
     </style>
 </head>
 <body>
@@ -173,10 +173,10 @@
     <div id="info">
     <p>SCORE: <span id="text-score">0</span></p>
     <p>TIME: <span id="text-time">20</span>s</p>
-    <!-- <div id="line"></div>
+    <div id="line"></div>
     <br>
     <p>PLAYER: <span id="text-highplayer"></span></p>    
-    <p>SCORE: <span id="text-highscore"></span></p> -->
+    <p>SCORE: <span id="text-highscore"></span></p>
     </div>
     <script src="jquery-3.5.1.min.js"></script>
     <script>
@@ -184,6 +184,14 @@
         let time = 20
 
         let id = 0
+
+        let highscore = { name: '', score: 0 }        
+        let highscoreStorage = JSON.parse( localStorage.getItem('highscore') )
+        if( highscoreStorage !== null ) {
+            highscore = highscoreStorage
+            $('#text-highplayer').text( highscore.name )
+            $('#text-highscore').text( highscore.score )
+        }
 
         const rand = (num) => {
             return Math.floor( Math.random() * num )
@@ -226,7 +234,18 @@
 
                     setTimeout(() => {
                         alert(`TIME OUT! 你得了 ${score} 分！`)
-                    }, 100)
+
+                        if(highscoreStorage === null || highscore.score < score) {               
+
+                            const name = prompt('恭喜你獲得最高分!請輸入你的英文名字')
+                            highscore.score = score                
+                            highscore.name = name || '路人'
+
+                            localStorage.setItem( 'highscore', JSON.stringify(highscore) )
+                            $('#text-highplayer').text( highscore.name )
+                            $('#text-highscore').text( highscore.score )
+                        }
+                    }, 100) 
 
                 } else {                
                     if( rand(19) < 17 ) {
